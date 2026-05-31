@@ -1,0 +1,390 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "spacing": 8,
+  "vconcat": [
+    {
+      "width": "container",
+      "height": 420,
+      "projection": {
+        "type": "naturalEarth1",
+        "scale": 175,
+        "translate": [
+          490,
+          220
+        ]
+      },
+      "layer": [
+        {
+          "data": {
+            "url": "assets/maps/countries.geojson",
+            "format": {
+              "type": "json"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#d4e6d4",
+            "stroke": "#aac8aa",
+            "strokeWidth": 0.4
+          }
+        },
+        {
+          "data": {
+            "url": "data/chart5_region_bubbles.csv",
+            "format": {
+              "type": "csv"
+            }
+          },
+          "params": [
+            {
+              "name": "region_select",
+              "select": {
+                "type": "point",
+                "fields": [
+                  "region"
+                ]
+              },
+              "on": "click"
+            }
+          ],
+          "transform": [
+            {
+              "calculate": "toNumber(datum.arrivals)",
+              "as": "arrivals"
+            },
+            {
+              "calculate": "toNumber(datum.lon)",
+              "as": "lon"
+            },
+            {
+              "calculate": "toNumber(datum.lat)",
+              "as": "lat"
+            }
+          ],
+          "mark": {
+            "type": "circle",
+            "stroke": "white",
+            "strokeWidth": 2
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "size": {
+              "field": "arrivals",
+              "type": "quantitative",
+              "scale": {
+                "range": [
+                  200,
+                  6500
+                ]
+              },
+              "legend": null
+            },
+            "color": {
+              "field": "region",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Southern & Central Asia",
+                  "South-East Asia",
+                  "North-East Asia",
+                  "North-West Europe",
+                  "Oceania (ex Aust. born)",
+                  "Sub-Saharan Africa",
+                  "Americas",
+                  "North Africa & Middle East",
+                  "Southern & Eastern Europe"
+                ],
+                "range": [
+                  "#8e44ad",
+                  "#e67e22",
+                  "#c0392b",
+                  "#2980b9",
+                  "#27ae60",
+                  "#16a085",
+                  "#f1a50a",
+                  "#d35400",
+                  "#9b59b6"
+                ]
+              },
+              "legend": null
+            },
+            "opacity": {
+              "condition": {
+                "param": "region_select",
+                "empty": true,
+                "value": 0.82
+              },
+              "value": 0.15
+            },
+            "strokeWidth": {
+              "condition": {
+                "param": "region_select",
+                "empty": false,
+                "value": 3
+              },
+              "value": 1.5
+            },
+            "tooltip": [
+              {
+                "field": "region",
+                "type": "nominal",
+                "title": "Region"
+              },
+              {
+                "field": "arrivals",
+                "type": "quantitative",
+                "title": "Arrivals 2024\u201325",
+                "format": ","
+              }
+            ]
+          }
+        },
+        {
+          "data": {
+            "url": "data/chart5_region_bubbles.csv",
+            "format": {
+              "type": "csv"
+            }
+          },
+          "transform": [
+            {
+              "calculate": "toNumber(datum.arrivals)",
+              "as": "arrivals"
+            },
+            {
+              "calculate": "toNumber(datum.lon)",
+              "as": "lon"
+            },
+            {
+              "calculate": "toNumber(datum.lat)",
+              "as": "lat"
+            },
+            {
+              "calculate": "format(datum.arrivals, ',d')",
+              "as": "label"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 10,
+            "fontWeight": "bold",
+            "color": "white",
+            "baseline": "middle",
+            "align": "center"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label",
+              "type": "nominal"
+            },
+            "opacity": {
+              "condition": {
+                "param": "region_select",
+                "empty": true,
+                "value": 1
+              },
+              "value": 0.15
+            }
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "lon": 133.0,
+                "lat": -27.0,
+                "label": "Australia"
+              }
+            ]
+          },
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "size": 60,
+            "color": "#1f2933"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            }
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "lon": 133.0,
+                "lat": -27.0,
+                "label": "Australia"
+              }
+            ]
+          },
+          "mark": {
+            "type": "text",
+            "dy": -12,
+            "fontWeight": "bold",
+            "fontSize": 11,
+            "color": "#1f2933"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label",
+              "type": "nominal"
+            }
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {
+                "lon": -20.0,
+                "lat": -28.0,
+                "t": "Asia dominates: 3 regions"
+              },
+              {
+                "lon": -20.0,
+                "lat": -35.0,
+                "t": "287k arrivals = 62% of all migrants"
+              }
+            ]
+          },
+          "transform": [
+            {
+              "calculate": "toNumber(datum.lon)",
+              "as": "lon"
+            },
+            {
+              "calculate": "toNumber(datum.lat)",
+              "as": "lat"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "fontSize": 10.5,
+            "fontWeight": "bold",
+            "color": "#245f73"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "t",
+              "type": "nominal"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "url": "data/chart5_region_bubbles.csv",
+        "format": {
+          "type": "csv"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "toNumber(datum.arrivals)",
+          "as": "arrivals"
+        }
+      ],
+      "width": "container",
+      "height": 28,
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0
+      },
+      "encoding": {
+        "x": {
+          "field": "region",
+          "type": "nominal",
+          "axis": null
+        },
+        "color": {
+          "field": "region",
+          "type": "nominal",
+          "title": "World Region",
+          "scale": {
+            "domain": [
+              "Southern & Central Asia",
+              "South-East Asia",
+              "North-East Asia",
+              "North-West Europe",
+              "Oceania (ex Aust. born)",
+              "Sub-Saharan Africa",
+              "Americas",
+              "North Africa & Middle East",
+              "Southern & Eastern Europe"
+            ],
+            "range": [
+              "#8e44ad",
+              "#e67e22",
+              "#c0392b",
+              "#2980b9",
+              "#27ae60",
+              "#16a085",
+              "#f1a50a",
+              "#d35400",
+              "#9b59b6"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 5,
+            "titleFontSize": 11,
+            "labelFontSize": 10,
+            "symbolSize": 120,
+            "title": "World Region",
+            "padding": 4
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "concat": {
+      "spacing": 0
+    }
+  }
+}

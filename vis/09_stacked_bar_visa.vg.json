@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/chart9_visa_program_stacked_bar.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.grants)", "as": "grants" }
+  ],
+  "mark": { "type": "bar" },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": null,
+      "axis": { "labelAngle": -45, "labelFontSize": 11 }
+    },
+    "y": {
+      "field": "grants",
+      "type": "quantitative",
+      "title": "Visa Grants",
+      "stack": "zero",
+      "axis": { "format": "," }
+    },
+    "color": {
+      "field": "category",
+      "type": "nominal",
+      "title": "Visa Category",
+      "scale": {
+        "domain": ["Skilled", "Family", "Special Eligibility"],
+        "range": ["#245f73", "#4a9ab5", "#82c4d4"]
+      }
+    },
+    "tooltip": [
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      { "field": "category", "type": "nominal", "title": "Category" },
+      { "field": "grants", "type": "quantitative", "title": "Grants", "format": "," }
+    ]
+  }
+}

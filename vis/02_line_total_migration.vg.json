@@ -1,0 +1,274 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/chart2_nom_trend_20yr.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "params": [
+    {
+      "name": "startYear",
+      "bind": {
+        "input": "select",
+        "options": [
+          "2004-05",
+          "2005-06",
+          "2006-07",
+          "2007-08",
+          "2008-09",
+          "2009-10",
+          "2010-11",
+          "2011-12",
+          "2012-13",
+          "2013-14",
+          "2014-15",
+          "2015-16",
+          "2016-17",
+          "2017-18",
+          "2018-19",
+          "2019-20",
+          "2020-21",
+          "2021-22",
+          "2022-23",
+          "2023-24",
+          "2024-25"
+        ],
+        "name": "Start Year: "
+      },
+      "value": "2004-05"
+    },
+    {
+      "name": "endYear",
+      "bind": {
+        "input": "select",
+        "options": [
+          "2004-05",
+          "2005-06",
+          "2006-07",
+          "2007-08",
+          "2008-09",
+          "2009-10",
+          "2010-11",
+          "2011-12",
+          "2012-13",
+          "2013-14",
+          "2014-15",
+          "2015-16",
+          "2016-17",
+          "2017-18",
+          "2018-19",
+          "2019-20",
+          "2020-21",
+          "2021-22",
+          "2022-23",
+          "2023-24",
+          "2024-25"
+        ],
+        "name": "End Year:   "
+      },
+      "value": "2024-25"
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.year >= startYear && datum.year <= endYear"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#245f73",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelAngle": -45,
+            "labelFontSize": 11
+          }
+        },
+        "y": {
+          "field": "net_overseas_migration",
+          "type": "quantitative",
+          "title": "Net Overseas Migration",
+          "scale": {
+            "domain": [
+              -150000,
+              620000
+            ]
+          },
+          "axis": {
+            "format": ","
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#245f73",
+        "size": 60
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "net_overseas_migration",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              -150000,
+              620000
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "type": "ordinal",
+            "title": "Year"
+          },
+          {
+            "field": "net_overseas_migration",
+            "type": "quantitative",
+            "title": "Net Migration",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": "2008-09",
+            "y": 380000,
+            "label": "GFC peak\n302k"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dx": 0,
+        "dy": 0,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#e67e22",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "datum": 380000,
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              -150000,
+              620000
+            ]
+          }
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": "2020-21",
+            "y": -130000,
+            "label": "COVID: \u221292k"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "dx": 0,
+        "dy": 0,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#c0392b",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "datum": -130000,
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              -150000,
+              620000
+            ]
+          }
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": "2021-22",
+            "y": 530000,
+            "label": "Record rebound\n565k \u2192"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -4,
+        "dy": 0,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#245f73",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "ordinal"
+        },
+        "y": {
+          "datum": 530000,
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              -150000,
+              620000
+            ]
+          }
+        },
+        "text": {
+          "field": "label",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}

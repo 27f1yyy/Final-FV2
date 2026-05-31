@@ -1,0 +1,59 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 400,
+    "projection": {
+      "type": "mercator"
+      },
+
+    "data": {
+      "url": "assets/maps/states.geojson",
+      "format": { "type": "json", "property": "features" }
+    },
+    
+    "transform": [
+
+      {
+        "calculate": "datum.properties.STATE_NAME",
+        "as": "state_name"
+      },
+      {
+        "lookup": "state_name",
+        "from": {
+          "data": {
+            "url": "data/chart1_nom_by_state_2024_25.csv",
+            "format": { "type": "csv" }
+          },
+          "key": "state_name",
+          "fields": ["net_migration_2024_25", "state"]
+        }
+      },
+      {
+        "calculate": "toNumber(datum.net_migration_2024_25)",
+        "as": "net_migration"
+      }
+    ],
+    "mark": {
+      "type": "geoshape",
+      "stroke": "white",
+      "strokeWidth": 1
+    },
+    "encoding": {
+      "color": {
+        "field": "net_migration",
+        "type": "quantitative",
+        "scale": { "scheme": "blues" },
+        "legend": { "title": "Net Migration" }
+      },
+      "tooltip": [
+        { "field": "state_name", "type": "nominal", "title": "State" },
+        { "field": "state", "type": "nominal", "title": "Code" },
+        {
+          "field": "net_migration",
+          "type": "quantitative",
+          "title": "Net Migration",
+          "format": ","
+        }
+      ]
+    }
+  }

@@ -1,0 +1,165 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/chart6_region_growth_lollipop.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.growth_rate_pct)",
+      "as": "growth_rate_pct"
+    },
+    {
+      "calculate": "format(datum.growth_rate_pct, '.1f') + '%'",
+      "as": "growth_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "color": "#aaa"
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": {
+            "field": "growth_rate_pct",
+            "order": "descending"
+          },
+          "title": null
+        },
+        "x": {
+          "datum": 0,
+          "type": "quantitative"
+        },
+        "x2": {
+          "field": "growth_rate_pct",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 100,
+        "color": "#245f73"
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": {
+            "field": "growth_rate_pct",
+            "order": "descending"
+          },
+          "title": null
+        },
+        "x": {
+          "field": "growth_rate_pct",
+          "type": "quantitative",
+          "title": "Growth Rate (%)"
+        },
+        "tooltip": [
+          {
+            "field": "region",
+            "type": "nominal",
+            "title": "Region"
+          },
+          {
+            "field": "growth_rate_pct",
+            "type": "quantitative",
+            "title": "Growth Rate (%)"
+          },
+          {
+            "field": "arrivals_2018_19",
+            "type": "quantitative",
+            "title": "Arrivals 2018-19",
+            "format": ","
+          },
+          {
+            "field": "arrivals_2023_24",
+            "type": "quantitative",
+            "title": "Arrivals 2023-24",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 8,
+        "fontSize": 10,
+        "color": "#333"
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": {
+            "field": "growth_rate_pct",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "growth_rate_pct",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "growth_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "region": "South-East Asia",
+            "x": 47,
+            "t": "Oceania +73%: fastest growing"
+          },
+          {
+            "region": "North-West Europe",
+            "x": 47,
+            "t": "from a small base of 30k"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#245f73"
+      },
+      "encoding": {
+        "y": {
+          "field": "region",
+          "type": "nominal",
+          "sort": {
+            "field": "growth_rate_pct",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/chart4_top10_countries_grouped_bar.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "x": {
+          "field": "Country",
+          "type": "nominal",
+          "title": null,
+          "sort": {
+            "field": "net_migration",
+            "op": "sum",
+            "order": "descending"
+          },
+          "axis": {
+            "labelAngle": -35,
+            "labelFontSize": 11
+          }
+        },
+        "xOffset": {
+          "field": "year",
+          "type": "nominal"
+        },
+        "y": {
+          "field": "net_migration",
+          "type": "quantitative",
+          "title": "Net Migration",
+          "axis": {
+            "format": ","
+          }
+        },
+        "color": {
+          "field": "year",
+          "type": "nominal",
+          "title": "Year",
+          "scale": {
+            "domain": [
+              "2018-19",
+              "2024-25"
+            ],
+            "range": [
+              "#82c4d4",
+              "#245f73"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "type": "nominal",
+            "title": "Country"
+          },
+          {
+            "field": "year",
+            "type": "nominal",
+            "title": "Year"
+          },
+          {
+            "field": "net_migration",
+            "type": "quantitative",
+            "title": "Net Migration",
+            "format": ","
+          }
+        ]
+      },
+      "transform": [
+        {
+          "calculate": "toNumber(datum.net_migration)",
+          "as": "net_migration"
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "x": "Pakistan",
+            "y": 72000,
+            "t": "India leads by 2\u00d7"
+          },
+          {
+            "x": "Pakistan",
+            "y": 65000,
+            "t": "57,410 arrivals in 2024\u201325"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#245f73"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "nominal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}

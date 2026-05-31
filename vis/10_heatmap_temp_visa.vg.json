@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/chart10_heatmap_visa_net_flow.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.net)", "as": "net" }
+  ],
+  "mark": { "type": "rect" },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": null,
+      "axis": { "labelAngle": -45, "labelFontSize": 10 }
+    },
+    "y": {
+      "field": "visa_type",
+      "type": "nominal",
+      "title": null
+    },
+    "color": {
+      "field": "net",
+      "type": "quantitative",
+      "title": "Net Flow",
+      "scale": { "scheme": "blueorange", "domainMid": 0 },
+      "legend": {
+        "format": ",",
+        "labelFontSize": 10,
+        "titleFontSize": 10
+      }
+    },
+    "tooltip": [
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      { "field": "visa_type", "type": "nominal", "title": "Visa Type" },
+      { "field": "net", "type": "quantitative", "title": "Net Flow", "format": "," }
+    ]
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 460,
+  "data": {
+    "url": "data/chart_a_visa_industry_bubble.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.jobs_2223)", "as": "jobs" },
+    { "calculate": "toNumber(datum.income_2223)", "as": "income" },
+    {
+      "calculate": "datum.industry == 'Agriculture, Forestry and Fishing' ? 'Agriculture' : datum.industry == 'Professional, Scientific and Technical Services' ? 'Professional Services' : datum.industry == 'Health Care and Social Assistance' ? 'Health & Social Care' : datum.industry == 'Administrative and Support Services' ? 'Admin & Support' : datum.industry == 'Accommodation and Food Services' ? 'Hospitality' : datum.industry == 'Information Media and Telecommunications' ? 'IT & Telecoms' : datum.industry == 'Transport, Postal and Warehousing' ? 'Transport' : datum.industry == 'Financial and Insurance Services' ? 'Finance & Insurance' : datum.industry == 'Electricity, Gas, Water and Waste Services' ? 'Utilities' : datum.industry == 'Rental, Hiring and Real Estate Services' ? 'Real Estate' : datum.industry == 'Public Administration and Safety' ? 'Public Admin' : datum.industry == 'Arts and Recreation Services' ? 'Arts & Recreation' : datum.industry",
+      "as": "ind_short"
+    }
+  ],
+  "params": [
+    {
+      "name": "visa_sel",
+      "value": "Permanent Skilled",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Permanent Skilled",
+          "Permanent Family",
+          "Permanent Humanitarian",
+          "Temporary Student",
+          "Temporary Graduate",
+          "Temporary Skilled",
+          "Temporary Working Holiday Maker"
+        ],
+        "name": "Visa type: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "transform": [
+        { "filter": "datum.visa == visa_sel" }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.82
+      },
+      "encoding": {
+        "x": {
+          "field": "income",
+          "type": "quantitative",
+          "title": "Median income per job ($)",
+          "scale": { "domainMin": 0 },
+          "axis": {
+            "labelExpr": "datum.value == 0 ? '$0' : '$' + (datum.value/1000) + 'k'",
+            "labelFontSize": 10,
+            "gridColor": "#eee"
+          }
+        },
+        "y": {
+          "field": "ind_short",
+          "type": "nominal",
+          "title": null,
+          "sort": { "field": "income", "op": "mean", "order": "descending" },
+          "axis": { "labelFontSize": 11, "labelLimit": 160 }
+        },
+        "size": {
+          "field": "jobs",
+          "type": "quantitative",
+          "title": "Number of jobs",
+          "scale": { "range": [40, 3000] },
+          "legend": {
+            "orient": "right",
+            "titleFontSize": 10,
+            "labelFontSize": 10,
+            "format": ",",
+            "offset": 10
+          }
+        },
+        "color": {
+          "field": "visa",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Permanent Skilled", "Permanent Family", "Permanent Humanitarian",
+              "Temporary Student", "Temporary Graduate", "Temporary Skilled",
+              "Temporary Working Holiday Maker"
+            ],
+            "range": ["#245f73","#4a9ab5","#82c4d4","#e67e22","#f39c12","#8e44ad","#27ae60"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          { "field": "ind_short", "type": "nominal", "title": "Industry" },
+          { "field": "visa", "type": "nominal", "title": "Visa type" },
+          { "field": "jobs", "type": "quantitative", "title": "Jobs (2022–23)", "format": "," },
+          { "field": "income", "type": "quantitative", "title": "Median income", "format": "$," }
+        ]
+      }
+    },
+    {
+      "transform": [
+        { "filter": "datum.visa == visa_sel" },
+        { "filter": "datum.income > 90000 || datum.jobs > 250000" }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#245f73"
+      },
+      "encoding": {
+        "x": { "field": "income", "type": "quantitative" },
+        "y": {
+          "field": "ind_short",
+          "type": "nominal",
+          "sort": { "field": "income", "op": "mean", "order": "descending" }
+        },
+        "text": {
+          "condition": {
+            "test": "datum.income > 90000",
+            "field": "income",
+            "type": "quantitative",
+            "format": "$,.0f"
+          },
+          "value": ""
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": { "stroke": null },
+    "legend": { "disable": false }
+  }
+}

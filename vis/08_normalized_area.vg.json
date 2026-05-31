@@ -1,0 +1,92 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 460,
+  "data": {
+    "url": "data/chart_normalized_area.csv",
+    "format": { "type": "csv" }
+  },
+  "transform": [
+    { "calculate": "toNumber(datum.jobs)", "as": "jobs" }
+  ],
+  "mark": {
+    "type": "area",
+    "interpolate": "monotone",
+    "line": {
+      "color": "white",
+      "width": 0.7
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year",
+      "axis": { "labelAngle": 0, "labelFontSize": 11, "titleFontSize": 12 },
+      "scale": { "padding": 0 }
+    },
+    "y": {
+      "field": "jobs",
+      "type": "quantitative",
+      "stack": "normalize",
+      "title": "Share of migrant jobs",
+      "axis": { "format": ".0%", "labelFontSize": 10, "titleFontSize": 12 }
+    },
+    "color": {
+      "field": "industry",
+      "type": "nominal",
+      "title": "Industry",
+      "scale": {
+        "domain": [
+          "Health and Social Care", "Hospitality", "Admin and Support",
+          "Professional Services", "Retail", "Education",
+          "Construction", "Manufacturing", "Transport",
+          "Finance and Insurance", "Public Admin", "Wholesale Trade",
+          "Agriculture", "Mining"
+        ],
+        "range": [
+          "#1f77b4",
+          "#ff7f0e",
+          "#17becf",
+          "#9467bd",
+          "#8c564b",
+          "#bcbd22",
+          "#264653",
+          "#f4a261",
+          "#6d597a",
+          "#2ca02c",
+          "#7f7f7f",
+          "#aec7e8",
+          "#d62728",
+          "#c7c7c7"
+        ]
+      },
+      "legend": {
+        "orient": "right",
+        "labelFontSize": 11,
+        "titleFontSize": 11,
+        "symbolSize": 120
+      }
+    },
+    "order": {
+      "field": "industry",
+      "type": "nominal",
+      "sort": [
+        "Health and Social Care", "Hospitality", "Admin and Support",
+        "Professional Services", "Retail", "Education",
+        "Construction", "Manufacturing", "Transport",
+        "Finance and Insurance", "Public Admin", "Wholesale Trade",
+        "Agriculture", "Mining"
+      ]
+    },
+    "tooltip": [
+      { "field": "year", "type": "ordinal", "title": "Year" },
+      { "field": "industry", "type": "nominal", "title": "Industry" },
+      { "field": "jobs", "type": "quantitative", "title": "Jobs", "format": "," }
+    ]
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false }
+  }
+}
